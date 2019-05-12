@@ -8,10 +8,10 @@ $('document').ready(function() {
         } else if (event.data.action == 'close') {
             $('.overlay').hide();
             clearDocument()
-            $.post('http://t0sic_inventoryui/NUIFocusOff', JSON.stringify({}));
+            $.post('http://esx_inventarioUID/NUIFocusOff', JSON.stringify({}));
         }
 
-        
+
         function test(){
             let test = event.data.items
             let test1 = []
@@ -49,16 +49,16 @@ $('document').ready(function() {
         if (data.which == 27) {
             $('.overlay').hide();
             clearDocument()
-            $.post('http://t0sic_inventoryui/NUIFocusOff', JSON.stringify({}));
+            $.post('http://esx_inventarioUID/NUIFocusOff', JSON.stringify({}));
         }
       }
     var containers = dragula([
         document.getElementById('drag1'),
-        document.getElementById('drag2'), 
-    ]) 
+        document.getElementById('drag2'),
+    ])
     containers.on('drop',function(el,target,source,sibling){
         if (source.id == 'drag1' && source.id != target.id) {
-            
+
             $('#drag2').each(function() {
                 let count = $(this).children(`.${el.id}`).length;
                 if (count > 1) {
@@ -67,7 +67,7 @@ $('document').ready(function() {
                 }
             })
         } else if (source.id == 'drag2' && source.id != target.id) {
-            $.post('http://t0sic_inventoryui/drop', JSON.stringify({
+            $.post('http://esx_inventarioUID/drop', JSON.stringify({
                 count: Number(el.innerHTML),
                 item: el.id
             }));
@@ -76,7 +76,7 @@ $('document').ready(function() {
             $(`#${el.id}`).hide()
         }
     });
-    
+
     $('body').on('click', '.default', (event)=> {
         var selectedItem = event.target.id
         $('#drag2').children().css('background-color', 'rgb(31, 30, 43)');
@@ -88,7 +88,7 @@ $('document').ready(function() {
         $(`#${selectedItem}`).addClass('selected');
         $(`#${selectedItem}`).css('background-color', '#1d3459');
     })
-    
+
     document.getElementById('money').addEventListener('click', function(event) {
         $('#drag2').children().css('background-color', 'rgb(31, 30, 43)');
         $('#drag2').children().removeClass('selected')
@@ -109,7 +109,7 @@ $('document').ready(function() {
 
     document.getElementById('button-use').addEventListener('click', function(event) {
         var itemSelected = document.getElementsByClassName('selected')[0].id;
-        $.post('http://t0sic_inventoryui/use', JSON.stringify({
+        $.post('http://esx_inventarioUID/use', JSON.stringify({
                 item: itemSelected
             }));
     })
@@ -117,18 +117,18 @@ $('document').ready(function() {
         var itemSelected = document.getElementsByClassName('selected')[0];
         if (document.getElementsByClassName('selected')[0].id == 'money') {
             let amount = Number(document.getElementById('drop-count').value)
-            $.post('http://t0sic_inventoryui/dropcash', JSON.stringify({
+            $.post('http://esx_inventarioUID/dropcash', JSON.stringify({
                 count: amount
             }));
         } else if (document.getElementsByClassName('selected')[0].id == 'blackcash') {
             let amount2 = Number(document.getElementById('drop-count').value)
-            $.post('http://t0sic_inventoryui/dropblackcash', JSON.stringify({
+            $.post('http://esx_inventarioUID/dropblackcash', JSON.stringify({
                 count: amount2
             }));
         } else if (Number(document.getElementById('drop-count').value) > document.getElementsByClassName('selected')[0].innerText) {
             console.log(`You don't have that many ${document.getElementsByClassName('selected')[0].id}('s)`);
         } else if(Number(document.getElementById('drop-count').value) > 0) {
-            $.post('http://t0sic_inventoryui/drop', JSON.stringify({
+            $.post('http://esx_inventarioUID/drop', JSON.stringify({
                 item: document.getElementsByClassName('selected')[0].id,
                 count: Number(document.getElementById('drop-count').value)
             }));
@@ -138,7 +138,7 @@ $('document').ready(function() {
             }
         }
     });
-    function clearDocument() {    	
+    function clearDocument() {
         $("#drag1").empty();
         $("#drag2").empty();
     }
